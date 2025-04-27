@@ -1,94 +1,121 @@
 import trashIcon from '../../public/Assets/Icons/delete-icon.svg'
 import finishIcon from '../../public/Assets/Icons/check-icon.svg'
-import {
-  state,
-  addProject,
-  deleteProject,
-  renameProject,
-  setActiveProject
-} from '../state.js';
+import { renderTasks } from '../TaskManager/taskManager';
 
-const newList = document.querySelector('.my-lists');
-const newProjectList = document.querySelector('.new-project');
-const plusButton = document.querySelector('.plus-symbol');
 
-function renderProjectsUI() {
-  newList.innerHTML = '';
-  state.projects.forEach(project => {
-    const projectItem = document.createElement('li');
-    projectItem.innerHTML = `
-      <div class="new-project-list${state.activeProjectId === project.id ? ' active' : ''}">
-        <input class="project-name-input" value="${project.name}" data-id="${project.id}" />
-        <div class="icons">
-          <button class="select-project" data-id="${project.id}" title="Select">✔️</button>
-          <button class="delete-project" data-id="${project.id}" title="Delete"><img src="${trashIcon}" alt="Delete"></button>
-        </div>
-      </div>
-    `;
-    newList.appendChild(projectItem);
-  });
+const plusButton = document.querySelector(".plus-symbol");
+const newProjectList = document.querySelector(".new-project");
+const newList = document.querySelector(".my-lists");
 
-  // Add event listeners for select, delete, and rename
-  newList.querySelectorAll('.select-project').forEach(btn => {
-    btn.addEventListener('click', e => {
-      setActiveProject(Number(e.target.dataset.id));
-    });
-  });
-  newList.querySelectorAll('.delete-project').forEach(btn => {
-    btn.addEventListener('click', e => {
-      deleteProject(Number(e.target.dataset.id));
-    });
-  });
-  newList.querySelectorAll('.project-name-input').forEach(input => {
-    input.addEventListener('change', e => {
-      renameProject(Number(e.target.dataset.id), e.target.value);
-    });
-  });
-}
 
-if (plusButton) {
-  plusButton.addEventListener('click', function(e) {
-    e.stopPropagation();
-    newProjectList.innerHTML = `
-      <div class="overlay active">
-        <div class="pop-up-content">
-          <input type="text" id="getInput" placeholder="Add A Project To The List">
-          <button class="continue">Continue</button>
-        </div>
-      </div>`;
-    setTimeout(() => {
-      document.addEventListener('click', handleOutsideClick);
-    }, 0);
-    const continueButton = document.querySelector('.continue');
-    if (continueButton) {
-      continueButton.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const getInput = document.getElementById('getInput');
-        const projectName = getInput.value.trim();
-        if (projectName) {
-          addProject(projectName);
-        }
-        hidePopup();
-      });
+let projects = []; // Array to store tasks
+
+function createProject() {
+    if (plusButton) {
+        plusButton.addEventListener('click', function(e) {
+            // Prevent the outside click handler from immediately triggering
+            e.stopPropagation();
+
+            newProjectList.innerHTML = `
+                <div class="overlay active">
+                    <div class="pop-up-content">
+                        <input type="text" id="getInput" placeholder="Add A Project To The List">
+                        <button class="continue">Continue</button>
+                    </div>
+                </div>`;
+
+            // Add event listener for outside click
+            setTimeout(() => {
+                document.addEventListener('click', handleOutsideClick);
+            }, 0);
+
+            // Add event listener for the close button
+            const closeMark = document.querySelector(".close-mark");
+            if (closeMark) {
+                closeMark.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent the outside click handler from triggering
+                    hidePopup();
+                });
+            }
+
+            // Add event listener for continue button
+            const continueButton = document.querySelector(".continue");
+            if (continueButton) {
+                continueButton.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent the outside click handler from triggering
+                    console.log("continue button clicked");
+                    const getInput = document.getElementById('getInput');
+                    const projectName = getInput.value;
+
+                    // Create a new task object
+                    const project = {
+                        id: projects.length + 1, // Unique ID for the task
+                        name: projectName,
+                        tasks: []
+                    };
+
+                    // Add the new task to the tasks array
+                    projects.push(project);
+
+                    // Render the tasks list
+                    renderProjects();
+
+                    // Hide the popup after adding the task
+                    hidePopup();
+                });
+            }
+        });
+    } else {
+        console.log("Plus button not found");
     }
-  });
 }
 
+// Function to render tasks
+function renderProjects() {
+    newList.innerHTML = ''; // Clear the current list
+
+    projects.forEach(project => {
+        const projectItem = document.createElement('li');
+        projectItem.innerHTML = `
+            <div class="new-project-list">
+                <div>${project.name}</div>
+                <div class="icons">
+                    <div class="task-complete"><img src=${finishIcon} alt=""></div>
+                    <div class="trash"><img src=${trashIcon} alt=""></div>
+                </div>
+            </div>`;
+        newList.appendChild(projectItem);
+
+        projectItem.addEventListener('click', () => {
+            renderTasks(project.id);
+        });
+    });
+
+}
+
+// Function to handle clicks outside the popup
 function handleOutsideClick(event) {
-  const clickedElement = event.target;
-  const popup = document.querySelector('.overlay.active');
-  if (popup && !clickedElement.closest('.pop-up-content')) {
-    hidePopup();
-  }
+    const clickedElement = event.target;
+    const popup = document.querySelector('.overlay.active');
+
+    // Check if the clicked element is not part of the popup
+    if (popup && !clickedElement.closest('.pop-up-content')) {
+        hidePopup();
+    }
 }
 
+// Function to hide the popup
 function hidePopup() {
-  const popup = document.querySelector('.overlay.active');
-  if (popup) {
-    popup.classList.remove('active');
-    popup.remove();
-  }
-  document.removeEventListener('click', handleOutsideClick);
+    const popup = document.querySelector('.overlay.active');
+    if (popup) {
+        popup.classList.remove('active');
+        popup.remove();
+    }
+    document.removeEventListener('click', handleOutsideClick); // Remove event listener after closing
+    console.log("Popup hidden");
 }
 
-export { renderProjectsUI };
+// Initialize the createProject function
+createProject();
+
+export { createProject, renderProjects, handleOutsideClick, hidePopup, projects };
