@@ -1,0 +1,193 @@
+.task-container{
+    display: grid;
+    grid-template-rows: 60px auto 60px;
+    overflow: hidden;
+    height: 92%;
+    width: auto;
+    margin: 0px 30px 30px 50px;
+    background-color: rgba(255, 255, 255, 0.705);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.project-name{
+    display: flex;
+    font-size: 30px;
+    padding-left: 20px;
+}
+
+.input-button{
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+input{
+    border: none;
+}
+
+input::placeholder{
+    padding-left: 30px;
+}  
+.add-task{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+img{
+    size: 30px;
+}
+
+.unique-Task{
+    display: grid;
+    grid-template-columns: 20px 1fr 200px;
+    padding: 10px 20px 10px 20px;
+    margin: 5px 10px 5px 10px;
+    border-radius: 10px;
+}
+
+.unique-Task:hover{
+    box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.199);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.task-name{
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+.task-inner-div{
+    display: grid;
+    grid-template-rows: 80px 40px 0.5fr 1fr;
+    margin: 0px 40px 30px 15px;
+    height: 92%;
+    width: auto;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.inner-title, .inner-notes, .inner-attachments, .icons-tasks{
+    padding-left: 30px;
+}
+
+.icons-tasks{
+    display: flex;
+    flex-direction: row;
+}
+
+.inner-icons{
+    display: flex;
+    flex-direction: row;
+    margin-right: 30px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.281);
+    border-radius: 20px;
+}
+
+.inner-task{
+    padding-right: 25px;
+    padding-bottom: 18px;
+    padding-left: 6px;
+    font-weight:500;
+
+}
+
+.inner-img1, .inner-img2, .inner-img3{
+    padding-left: 10px;
+}
+
+.Notes{
+    display: grid;
+    grid-template-rows: 150px 30px;
+    margin-right: 30px;
+}
+
+.notes-title{
+    padding-top: 30px;
+}
+
+.notes-box{
+    margin: 20px 0px 20px 0px;
+    border-radius: 20px;
+    background-color: rgba(201, 201, 201, 0.349);
+}
+
+.notes-button {
+    margin-right: 50px;
+    margin-left: 50px;
+    border-radius: 20px;
+    background-color: #097cf7; /* Cool blue shade */
+    color: white; /* White text color */
+    border: none; /* Remove the border */
+    padding-top: 10px; /* Add some padding for better appearance */
+    padding-bottom: 30px;
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.notes-button:hover {
+    background-color: #0057b3; /* Darker blue shade on hover */
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+.attachment-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.add-content-button{
+    border: rgba(109, 109, 109, 0.664) dashed 2px;
+    border-radius: 10px;
+    padding: 50px 80px 50px 80px;
+}
+
+.heading-attachment{
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .task-container {
+        margin: 10px 5px;
+        width: 100%;
+    }
+    .task-inner-div {
+        margin: 0 5px 20px 5px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .task-container {
+        grid-template-rows: auto 1fr auto;
+        margin: 5px 0;
+        padding: 0 2px;
+    }
+    .unique-Task {
+        grid-template-columns: 1fr;
+        padding: 5px 5px;
+        margin: 2px 0;
+    }
+    .task-inner-div {
+        grid-template-rows: auto auto auto auto;
+        margin: 0 2px 10px 2px;
+        padding: 0 2px;
+    }
+    .inner-title, .inner-notes, .inner-attachments, .icons-tasks {
+        padding-left: 10px;
+    }
+    .notes-box {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+
+

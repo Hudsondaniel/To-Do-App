@@ -1,0 +1,114 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 999; /* Ensure it's above other content */
+}
+
+.pop-up-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left:250px;
+    margin-right: 250px;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.pop-up-content input[type="text"] {
+    width: 100%;
+    height: 70px;
+    margin: 0px 30px 0px 30px;
+    border: none;
+    background-color: rgba(221, 221, 221, 0.377);
+    border-radius: 10px;
+}
+
+.pop-up-content input::placeholder{
+    padding-left: 30px;
+    font-size: 20px;
+}
+
+.pop-up-content .continue {
+    padding: 10px 20px;
+    background-color: #007bff; 
+    height: 70px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.pop-up-content button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.new-project-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 10px 25px 10px 25px;
+    margin: 0px 20px 5px 20px;
+    font-size: 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    position: relative;
+    color: white;
+    background-color: rgb(123,125,198);
+}
+
+.icons{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: row;
+    padding-left: 10px;
+}
+
+.task-complete{
+    color: red;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .pop-up-content {
+        margin-left: 10vw;
+        margin-right: 10vw;
+        left: 50%;
+        width: 80vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .pop-up-content {
+        flex-direction: column;
+        margin-left: 2vw;
+        margin-right: 2vw;
+        left: 50%;
+        width: 96vw;
+        padding: 10px;
+    }
+    .pop-up-content input[type="text"] {
+        height: 50px;
+        font-size: 16px;
+    }
+    .pop-up-content .continue {
+        height: 50px;
+        font-size: 16px;
+        padding: 8px 10px;
+    }
+    .new-project-list {
+        font-size: 16px;
+        padding: 8px 10px;
+    }
+}
